@@ -1,0 +1,20 @@
+{{define "summary.html"}}
+<div id="summary">
+  <hr>
+  <h3>{{.MonthPrefix}}</h3>
+  {{if .GoalSet}}
+    <progress value="{{.ProgressPct}}" max="100"></progress>
+  {{end}}
+  <p>Total: <strong>{{.MonthTotal}}</strong> pushups</p>
+  {{if .GoalSet}}
+    <small>{{.MonthTotal}} / {{.MonthGoal}} goal &mdash; {{.ProgressPct}}%</small>
+    {{if .DailyNeeded}}
+    <p><small>~<strong>{{.DailyNeeded}}</strong> pushups/day needed over {{.DaysRemaining}} days to reach the goal.</small></p>
+    {{else}}
+    <p><small>Goal reached! &#x1F3C6;</small></p>
+    {{end}}
+  {{else}}
+    <p><small>No goal set. <a href="/users">Set a monthly goal</a>.</small></p>
+  {{end}}
+</div>
+{{end}}

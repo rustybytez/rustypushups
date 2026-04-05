@@ -1,0 +1,13 @@
+{{define "today.html"}}
+<div id="today">
+  <h1 style="font-size:6rem; text-align:center; margin:0; line-height:1;">{{.TodayCount}}</h1>
+  <p style="text-align:center;">pushups today</p>
+
+  <form hx-post="/log" hx-target="#today" hx-swap="outerHTML">
+    <input type="hidden" name="count" value="10">
+    <button type="submit">+ 10 Pushups</button>
+  </form>
+
+  {{template "summary.html" .}}
+</div>
+{{end}}

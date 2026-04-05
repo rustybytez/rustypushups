@@ -1,0 +1,28 @@
+{{template "layout.html" .}}
+
+{{define "content"}}
+<hgroup>
+  <h2>History &mdash; {{.Month}}</h2>
+</hgroup>
+
+<figure style="overflow-x:auto;">
+  <table>
+    <thead>
+      <tr>
+        <th>Day</th>
+        {{range .Users}}<th>{{.Name}}</th>{{end}}
+      </tr>
+    </thead>
+    <tbody>
+      {{range .Rows}}
+      <tr>
+        <td>{{.Date}}</td>
+        {{range .Counts}}
+        <td>{{if .}}{{.}}{{end}}</td>
+        {{end}}
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+</figure>
+{{end}}

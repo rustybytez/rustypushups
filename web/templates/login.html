@@ -1,0 +1,20 @@
+{{template "layout.html" .}}
+
+{{define "content"}}
+<hgroup>
+  <h2>Login</h2>
+  <p>Enter your access token to continue.</p>
+</hgroup>
+
+{{if .Error}}
+<p><mark>{{.Error}}</mark></p>
+{{end}}
+
+<form method="POST" action="/login">
+  <label for="token">
+    Token
+    <input id="token" type="password" name="token" placeholder="••••••••" required autofocus>
+  </label>
+  <button type="submit">Enter</button>
+</form>
+{{end}}
