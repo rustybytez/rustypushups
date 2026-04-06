@@ -1,3 +1,14 @@
-*.db
-tmp/
+# env
 .env
+
+# database
+*.db
+*.db-shm
+*.db-wal
+
+# build output
+tmp/
+server
+
+# OS
+.DS_Store
