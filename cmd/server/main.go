@@ -71,6 +71,7 @@ func main() {
 	homeH := handler.NewHomeHandler(s)
 	protected.GET("/", homeH.Index)
 	protected.POST("/log", homeH.Log)
+	protected.POST("/edit", homeH.Edit)
 	protected.POST("/goal", homeH.SetGoal)
 
 	historyH := handler.NewHistoryHandler(s)

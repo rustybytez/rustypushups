@@ -13,6 +13,7 @@
   <title>RustyPushups</title>
   <style>
     h2, hgroup { position: sticky; top: 0; background: var(--pico-background-color); padding-bottom: 0.5rem; z-index: 10; }
+    #today hgroup { text-align: center; }
   </style>
 </head>
 <body>
@@ -23,12 +24,24 @@
       </ul>
       <ul>
         <li><a href="/">Today</a></li>
-        <li><a href="/history">History</a></li>
+        <li><a href="/history">Month</a></li>
         {{if .User}}<li><a href="/users">Settings</a></li>{{end}}
       </ul>
     </nav>
     {{template "content" .}}
   </div>
   <script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js"></script>
+  <script>
+    function updateNav() {
+      var today = new Date().toLocaleDateString('en-CA');
+      var container = document.getElementById('today');
+      if (!container) return;
+      var pageDate = container.dataset.date;
+      var nextLink = document.getElementById('next-day-link');
+      if (nextLink && pageDate >= today) nextLink.style.display = 'none';
+    }
+    updateNav();
+    document.addEventListener('htmx:afterSettle', updateNav);
+  </script>
 </body>
 </html>

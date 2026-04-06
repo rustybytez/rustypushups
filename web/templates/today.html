@@ -1,12 +1,52 @@
 {{define "today.html"}}
-<div id="today">
+<div id="today" data-date="{{.Today}}">
+  <nav>
+    <ul>
+      <li>{{if .PrevDate}}<a href="/?date={{.PrevDate}}">&larr; Prev</a>{{end}}</li>
+    </ul>
+    <ul>
+      <li id="next-day-link"><a href="/?date={{.NextDate}}">Next &rarr;</a></li>
+    </ul>
+  </nav>
+  <hgroup>
+    <h2>{{.TodayShort}}</h2>
+    <p>{{.User.Name}}</p>
+  </hgroup>
+
   <h1 style="font-size:6rem; text-align:center; margin:0; line-height:1;">{{.TodayCount}}</h1>
   <p style="text-align:center;">pushups today</p>
 
   <form hx-post="/log" hx-target="#today" hx-swap="outerHTML">
     <input type="hidden" name="count" value="10">
+    <input type="hidden" name="date" value="{{.Today}}">
     <button type="submit">+ 10 Pushups</button>
   </form>
+
+  <button type="button" class="secondary" onclick="document.getElementById('edit-modal').showModal()">Edit</button>
+
+  <dialog id="edit-modal">
+    <article>
+      <header>
+        <button aria-label="Close" rel="prev"
+                onclick="document.getElementById('edit-modal').close()"></button>
+        <h3>Edit &mdash; {{.TodayShort}}</h3>
+      </header>
+      <form hx-post="/edit" hx-target="#today" hx-swap="outerHTML"
+            hx-on::after-request="document.getElementById('edit-modal').close()">
+        <input type="hidden" name="date" value="{{.Today}}">
+        <label for="edit-count">
+          Total pushups for this day
+          <input id="edit-count" type="number" name="count" min="0"
+                 value="{{.TodayCount}}" required autofocus>
+        </label>
+        <footer>
+          <button type="button" class="secondary"
+                  onclick="document.getElementById('edit-modal').close()">Cancel</button>
+          <button type="submit">Save</button>
+        </footer>
+      </form>
+    </article>
+  </dialog>
 
   {{template "summary.html" .}}
 </div>
