@@ -74,7 +74,10 @@ func (h *HomeHandler) buildData(c echo.Context, clientDate string) (*homeData, e
 		return nil, err
 	}
 
-	combined, err := h.store.GetCombinedMonthlyTotal(ctx, monthPrefix)
+	combined, err := h.store.GetUserMonthlyTotal(ctx, db.GetUserMonthlyTotalParams{
+		UserID: user.ID,
+		Date:   monthPrefix,
+	})
 	if err != nil {
 		return nil, err
 	}

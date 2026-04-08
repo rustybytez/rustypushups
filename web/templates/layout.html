@@ -33,6 +33,14 @@
   </div>
   <script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js"></script>
   <script>
+    // Redirect to local date if landing on / with no date param (server uses UTC).
+    (function() {
+      var p = new URLSearchParams(window.location.search);
+      if (window.location.pathname === '/' && !p.get('date')) {
+        var localDate = new Date().toLocaleDateString('en-CA');
+        window.location.replace('/?date=' + localDate);
+      }
+    })();
     function updateNav() {
       var today = new Date().toLocaleDateString('en-CA');
       var container = document.getElementById('today');
